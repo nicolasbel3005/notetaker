@@ -3,6 +3,10 @@ const fs = require('fs');
 const path = require('path');
 const app = express();
 const PORT = process.env.PORT||3000
+app.use(express.json())
+app.use(express.urlencoded({
+  extended: true,
+}))
 app.use(express.static('public'));
 // Serve the notes.html file on the GET /notes route
 app.get('/notes', (req, res) => {
@@ -23,6 +27,14 @@ app.get("/api/notes",(req, res)=>{
     console.log(dbDATA)
     res.json(dbDATA)
 }) 
+app.post("/api/notes",(req, res)=>{
+  let note = (req.body)
+  let dbDATA = readDB()
+  note.id = dbDATA.length + 1
+dbDATA.push(note)
+writeDB(dbDATA)
+res.json(dbDATA)
+})
 
 // Serve the index.html file on all other routes
 app.get('*', (req, res) => {
