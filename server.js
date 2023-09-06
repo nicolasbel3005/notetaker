@@ -2,6 +2,7 @@ const express = require('express');
 const fs = require('fs');
 const path = require('path');
 const app = express();
+const PORT = process.env.PORT||3000
 app.use(express.static('public'));
 // Serve the notes.html file on the GET /notes route
 app.get('/notes', (req, res) => {
@@ -29,6 +30,6 @@ app.get('*', (req, res) => {
 });
 
 // Start the server
-app.listen(3000, () => {
-  console.log('Server listening on port 3000');
+app.listen(PORT, () => {
+  console.log(`Server listening on port ${PORT}`);
 });
